@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>Library Management System</h1>
+    <div class="form">
+        <form id="library">
+            <label class="form-cont" for="bookName">Book Name</label>
+            <input type="text" id="bookName">
+            <label class="form-cont" for="Author">Author</label>
+            <input type="text" id="Author">
+            <label class="form-cont" for="pages">Number of Pages</label>
+            <input type="text" id="pages">
+            <label class="form-cont" for="year">Established Year</label>
+            <input type="text" id="year">
+            <button id="btn">Add Book</button>
+        </form>
+    </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search books...">
+        <button id="searchBtn">Search</button>
+    </div>
+    <div class="books" id="bookInfo"></div>
+    <script>
+        const library = document.getElementById('library');
+        const booksDiv = document.getElementById('bookInfo');
+
+        library.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const bookName = document.getElementById('bookName').value;
+            const Author = document.getElementById('Author').value;
+            const pages = document.getElementById('pages').value;
+            const year = document.getElementById('year').value;
+
+            // Create a new div for each book set
+            const bookSetDiv = document.createElement('div');
+            bookSetDiv.classList.add('bookSet'); // Add class 'bookSet' to the div
+
+            // Create a new paragraph element for each entry
+            const bookNameParagraph = document.createElement('p');
+            const authorParagraph = document.createElement('p');
+            const pagesParagraph = document.createElement('p');
+            const yearParagraph = document.createElement('p');
+
+            // Set the content of each paragraph
+            bookNameParagraph.textContent = `${bookName}`;
+            authorParagraph.textContent = `Author: ${Author}`;
+            pagesParagraph.textContent = `Number of Pages: ${pages}`;
+            yearParagraph.textContent = `Established Year: ${year}`;
+
+            bookNameParagraph.classList.add('bookName');
+
+            // Append each paragraph to the bookSetDiv
+            bookSetDiv.appendChild(bookNameParagraph);
+            bookSetDiv.appendChild(authorParagraph);
+            bookSetDiv.appendChild(pagesParagraph);
+            bookSetDiv.appendChild(yearParagraph);
+
+
+            // Append the bookSetDiv to the booksDiv
+            booksDiv.appendChild(bookSetDiv);
+
+            // Clear input fields after submission
+            document.getElementById('bookName').value = '';
+            document.getElementById('Author').value = '';
+            document.getElementById('pages').value = '';
+            document.getElementById('year').value = '';
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const bookSets = document.querySelectorAll('.bookSet');
+            bookSets.forEach(bookSet => {
+                const bookDetails = bookSet.textContent.toLowerCase();
+                if (bookDetails.includes(searchQuery)) {
+                    bookSet.style.display = 'block';
+                } else {
+                    bookSet.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
